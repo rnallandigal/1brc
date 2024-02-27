@@ -1,0 +1,93 @@
+# TODO:
+#   - function parameter list length not taking into account the closing paren
+#     and opening brace -> line break after last character of last param name
+#     See: src/utils.cpp
+#   - forced multiline array of structs if AlignArrayOfStructures is set
+#     See: src/2020/03.cpp
+#   - short lambda used as middle function argument always breaks at open paren
+#     See: src/2020/11.cpp
+#     https://github.com/llvm/llvm-project/commit/d06b923915137c86e9f281e7fce28240e13665ea
+#   - lambda indentation when the lambda is the last param of a function should use the
+#     outer scope of the function. Otherwise, use signature scope.
+
+Language: Cpp
+AlignAfterOpenBracket: BlockIndent
+AlignArrayOfStructures: Right
+AlignEscapedNewlines: Left
+AllowAllArgumentsOnNextLine: true
+AllowAllParametersOfDeclarationOnNextLine: true
+AllowShortBlocksOnASingleLine: Never
+AllowShortCaseLabelsOnASingleLine: true
+# AllowShortCompoundRequirementOnASingleLine: true
+AllowShortEnumsOnASingleLine: true
+AllowShortFunctionsOnASingleLine: All
+AllowShortIfStatementsOnASingleLine: AllIfsAndElse
+AllowShortLambdasOnASingleLine: All
+AllowShortLoopsOnASingleLine: false
+AlwaysBreakAfterReturnType: None
+AlwaysBreakTemplateDeclarations: Yes
+BinPackArguments: false
+BinPackParameters: false
+BracedInitializerIndentWidth: 4
+BreakBeforeBinaryOperators: NonAssignment
+ColumnLimit: 80
+ContinuationIndentWidth: 4
+Cpp11BracedListStyle: true
+DerivePointerAlignment: false
+FixNamespaceComments: true
+IncludeBlocks: Regroup
+IndentWidth: 4
+IndentWrappedFunctionNames: false
+#PenaltyBreakAssignment: 2
+#PenaltyBreakBeforeFirstCallParameter: 19
+#PenaltyBreakComment: 300
+#PenaltyBreakFirstLessLess: 120
+#PenaltyBreakOpenParenthesis: 0
+#PenaltyBreakString: 1000
+#PenaltyBreakTemplateDeclaration: 10
+#PenaltyExcessCharacter: 1000000
+#PenaltyIndentedWhitespace: 0
+#PenaltyReturnTypeOnItsOwnLine: 60
+PointerAlignment: Left
+QualifierAlignment: Custom
+ReferenceAlignment: Left
+ReflowComments: true
+SpaceAroundPointerQualifiers: Default
+SpaceBeforeParens: Never
+Standard: Latest
+TabWidth: 4
+UseTab: Never
+IncludeCategories:
+  # This category matches standard C includes (<stdio.h>, <stdlib.h>, etc.)
+  - Regex: '^<[^/.]*\.h>'
+    Priority: -3
+
+  # This category matches standard C++ includes (<iostream>, <vector>, etc.)
+  - Regex: "^<[^/.]*>"
+    Priority: -2
+
+  # This category matches third-party includes (<boost/...>, <SFML/...>, etc.)
+  - Regex: "^<.*>"
+    Priority: -1
+
+  # This category matches local includes ("myheader.h", etc.)
+  - Regex: '^".*"'
+    Priority: 0
+    SortPriority: 1
+IntegerLiteralSeparator:
+  Binary: 4
+  BinaryMinDigits: 6
+  Decimal: 3
+  DecimalMinDigits: 6
+  Hex: -1
+QualifierOrder:
+  [
+    "inline",
+    "static",
+    "constexpr",
+    "friend",
+    "type",
+    "restrict",
+    "const",
+    "volatile",
+  ]

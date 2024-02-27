@@ -1,0 +1,7 @@
+.build
+.cache
+callgrind.out.*
+cachegrind.out.*
+out/
+resources/
+*.swp
