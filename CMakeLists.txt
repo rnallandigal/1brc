@@ -41,7 +41,7 @@ target_link_libraries(bench fmt pthread benchmark benchmark_main)
 set(SOURCE_FILES
 	src/baseline.cpp
 	src/floatparsing.cpp
-	src/latest.cpp
+	src/intparsing.cpp
 	src/diskread.cpp
 )
 

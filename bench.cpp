@@ -3,7 +3,7 @@
 #include "baseline.h"
 #include "diskread.h"
 #include "floatparsing.h"
-#include "latest.h"
+#include "intparsing.h"
 
 #define BENCHMARK_1BRC(bench, sut, input) \
     void bench(benchmark::State& state) { \
@@ -25,6 +25,6 @@ BENCHMARK_1BRC(BRC_FLOATPARSING_1E5, floatparsing, "resources/100k.txt");
 BENCHMARK_1BRC(BRC_FLOATPARSING_1E7, floatparsing, "resources/10m.txt");
 BENCHMARK_1BRC(BRC_FLOATPARSING_1E9, floatparsing, "resources/1b.txt");
 
-BENCHMARK_1BRC(BRC_LATEST_1E5, latest, "resources/100k.txt");
-BENCHMARK_1BRC(BRC_LATEST_1E7, latest, "resources/10m.txt");
-BENCHMARK_1BRC(BRC_LATEST_1E9, latest, "resources/1b.txt");
+BENCHMARK_1BRC(BRC_INTPARSING_1E5, intparsing, "resources/100k.txt");
+BENCHMARK_1BRC(BRC_INTPARSING_1E7, intparsing, "resources/10m.txt");
+BENCHMARK_1BRC(BRC_INTPARSING_1E9, intparsing, "resources/1b.txt");

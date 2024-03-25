@@ -8,9 +8,9 @@
 
 #include <fmt/format.h>
 
-#include "latest.h"
+#include "intparsing.h"
 
-namespace rinku::brc::latest {
+namespace rinku::brc::intparsing {
 
 static constexpr int BUF_SIZE = 4'194'304;
 
@@ -38,26 +38,17 @@ soln_t solve(std::string const& datafile) {
                 buf[j] = '\0';
                 std::string key(buf + start, semicolon - start);
 
-                char* val_start = buf + semicolon + 1;
-                float multiplier = 1;
-                float value = 0;
-                if(val_start[0] == '-') {
-                    multiplier = -1;
-                    val_start++;
-                }
-                if(val_start[1] == '.') {
-                    value =
-                        (val_start[0] - '0') + (float)(val_start[2] - '0') / 10;
-                } else {
-                    value = 10 * (val_start[0] - '0')
-                            + (float)(val_start[1] - '0')
-                            + (float)(val_start[3] - '0') / 10;
-                }
-                value *= multiplier;
+                char* digits = &buf[semicolon + 1];
+                int64_t value = 0, sign = 1;
+
+                if(*digits == '-') sign = -1, digits++;
+                value = *digits++ - '0';
+                if(*digits != '.') value = 10 * value + *digits++ - '0';
+                value = sign * (10 * value + *(++digits) - '0');
 
                 stats_t& s = m[key];
                 s.min = std::min(s.min, value);
-                s.mean = (s.mean * s.count + value) / (s.count + 1);
+                s.sum += value;
                 s.max = std::max(s.max, value);
                 s.count++;
             }
@@ -70,7 +61,7 @@ soln_t solve(std::string const& datafile) {
     return m;
 }
 
-void print(soln_t const& m) {
+std::string print(soln_t const& m) {
     std::vector<std::pair<std::string, stats_t>> v;
     for(auto const& [key, val] : m) {
         v.emplace_back(key, val);
@@ -84,18 +75,18 @@ void print(soln_t const& m) {
     for(auto const& [key, val] : v) {
         s += key;
         s += '=';
-        s += fmt::format("{:.1f}", val.min);
+        s += fmt::format("{:.1f}", (double)val.min / 10);
         s += '/';
-        s += fmt::format("{:.1f}", val.mean);
+        s += fmt::format("{:.1f}", (double)val.sum / (10 * val.count));
         s += '/';
-        s += fmt::format("{:.1f}", val.max);
+        s += fmt::format("{:.1f}", (double)val.max / 10);
         s += ", ";
     }
     s.pop_back();
     s[s.size() - 1] = '}';
-    fmt::print("{}\n", s);
+    return s;
 }
 
-void run(std::string const& datafile) { print(solve(datafile)); }
+std::string run(std::string const& datafile) { return print(solve(datafile)); }
 
-} // namespace rinku::brc::latest
+} // namespace rinku::brc::intparsing

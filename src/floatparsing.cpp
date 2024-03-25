@@ -70,7 +70,7 @@ soln_t solve(std::string const& datafile) {
     return m;
 }
 
-void print(soln_t const& m) {
+std::string print(soln_t const& m) {
     std::vector<std::pair<std::string, stats_t>> v;
     for(auto const& [key, val] : m) {
         v.emplace_back(key, val);
@@ -93,9 +93,9 @@ void print(soln_t const& m) {
     }
     s.pop_back();
     s[s.size() - 1] = '}';
-    fmt::print("{}\n", s);
+    return s;
 }
 
-void run(std::string const& datafile) { print(solve(datafile)); }
+std::string run(std::string const& datafile) { return print(solve(datafile)); }
 
 } // namespace rinku::brc::floatparsing

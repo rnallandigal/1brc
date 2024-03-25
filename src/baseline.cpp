@@ -53,7 +53,7 @@ soln_t solve(std::string const& datafile) {
     return m;
 }
 
-void print(soln_t const& soln) {
+std::string print(soln_t const& soln) {
     std::vector<std::pair<std::string, stats_t>> v;
     for(auto const& [key, val] : soln) {
         v.emplace_back(key, val);
@@ -76,9 +76,9 @@ void print(soln_t const& soln) {
     }
     s.pop_back();
     s[s.size() - 1] = '}';
-    fmt::print("{}\n", s);
+    return s;
 }
 
-void run(std::string const& datafile) { print(solve(datafile)); }
+std::string run(std::string const& datafile) { return print(solve(datafile)); }
 
 } // namespace rinku::brc::baseline
