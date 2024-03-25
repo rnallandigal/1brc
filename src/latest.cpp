@@ -6,7 +6,8 @@
 #include <utility>
 #include <vector>
 
-#include "fmt/format.h"
+#include <fmt/format.h>
+
 #include "latest.h"
 
 namespace rinku::brc::latest {
@@ -94,5 +95,7 @@ void print(soln_t const& m) {
     s[s.size() - 1] = '}';
     fmt::print("{}\n", s);
 }
+
+void run(std::string const& datafile) { print(solve(datafile)); }
 
 } // namespace rinku::brc::latest

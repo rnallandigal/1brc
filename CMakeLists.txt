@@ -42,6 +42,7 @@ set(SOURCE_FILES
 	src/baseline.cpp
 	src/floatparsing.cpp
 	src/latest.cpp
+	src/diskread.cpp
 )
 
 # object libs

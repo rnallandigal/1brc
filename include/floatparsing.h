@@ -14,5 +14,6 @@ using soln_t = std::unordered_map<std::string, stats_t>;
 
 soln_t solve(std::string const& datafile);
 void print(soln_t const& soln);
+void run(std::string const& datafile);
 
 } // namespace rinku::brc::floatparsing

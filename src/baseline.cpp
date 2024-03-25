@@ -79,4 +79,6 @@ void print(soln_t const& soln) {
     fmt::print("{}\n", s);
 }
 
+void run(std::string const& datafile) { print(solve(datafile)); }
+
 } // namespace rinku::brc::baseline

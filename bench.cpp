@@ -1,6 +1,7 @@
 #include <benchmark/benchmark.h>
 
 #include "baseline.h"
+#include "diskread.h"
 #include "floatparsing.h"
 #include "latest.h"
 
@@ -11,6 +12,10 @@
             solve(input);                 \
     }                                     \
     BENCHMARK(bench)->Unit(benchmark::kMillisecond)
+
+BENCHMARK_1BRC(BRC_DISKREAD_1E5, diskread, "resources/100k.txt");
+BENCHMARK_1BRC(BRC_DISKREAD_1E7, diskread, "resources/10m.txt");
+BENCHMARK_1BRC(BRC_DISKREAD_1E9, diskread, "resources/1b.txt");
 
 BENCHMARK_1BRC(BRC_BASELINE_1E5, baseline, "resources/100k.txt");
 BENCHMARK_1BRC(BRC_BASELINE_1E7, baseline, "resources/10m.txt");
