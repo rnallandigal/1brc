@@ -7,7 +7,7 @@
 
 #include <fmt/format.h>
 
-#include "baseline.h"
+#include "00-baseline.h"
 
 namespace rinku::brc::baseline {
 

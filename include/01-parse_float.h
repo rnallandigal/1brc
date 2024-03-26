@@ -3,7 +3,7 @@
 #include <string>
 #include <unordered_map>
 
-namespace rinku::brc::floatparsing {
+namespace rinku::brc::parse_float {
 
 struct stats_t {
     float min = 100, mean = 0, max = -100;
@@ -16,4 +16,4 @@ soln_t solve(std::string const& datafile);
 std::string print(soln_t const& soln);
 std::string run(std::string const& datafile);
 
-} // namespace rinku::brc::floatparsing
+} // namespace rinku::brc::parse_float

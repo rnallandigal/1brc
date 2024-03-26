@@ -1,9 +1,10 @@
 #include <benchmark/benchmark.h>
 
-#include "baseline.h"
+#include "00-baseline.h"
+#include "01-parse_float.h"
+#include "02-parse_int.h"
+#include "03-parse_branchless.h"
 #include "diskread.h"
-#include "floatparsing.h"
-#include "intparsing.h"
 
 #define BENCHMARK_1BRC(bench, sut, input) \
     void bench(benchmark::State& state) { \
@@ -21,10 +22,16 @@ BENCHMARK_1BRC(BRC_BASELINE_1E5, baseline, "resources/100k.txt");
 BENCHMARK_1BRC(BRC_BASELINE_1E7, baseline, "resources/10m.txt");
 BENCHMARK_1BRC(BRC_BASELINE_1E9, baseline, "resources/1b.txt");
 
-BENCHMARK_1BRC(BRC_FLOATPARSING_1E5, floatparsing, "resources/100k.txt");
-BENCHMARK_1BRC(BRC_FLOATPARSING_1E7, floatparsing, "resources/10m.txt");
-BENCHMARK_1BRC(BRC_FLOATPARSING_1E9, floatparsing, "resources/1b.txt");
+BENCHMARK_1BRC(BRC_PARSE_FLOAT_1E5, parse_float, "resources/100k.txt");
+BENCHMARK_1BRC(BRC_PARSE_FLOAT_1E7, parse_float, "resources/10m.txt");
+BENCHMARK_1BRC(BRC_PARSE_FLOAT_1E9, parse_float, "resources/1b.txt");
 
-BENCHMARK_1BRC(BRC_INTPARSING_1E5, intparsing, "resources/100k.txt");
-BENCHMARK_1BRC(BRC_INTPARSING_1E7, intparsing, "resources/10m.txt");
-BENCHMARK_1BRC(BRC_INTPARSING_1E9, intparsing, "resources/1b.txt");
+BENCHMARK_1BRC(BRC_PARSE_INT_1E5, parse_int, "resources/100k.txt");
+BENCHMARK_1BRC(BRC_PARSE_INT_1E7, parse_int, "resources/10m.txt");
+BENCHMARK_1BRC(BRC_PARSE_INT_1E9, parse_int, "resources/1b.txt");
+
+BENCHMARK_1BRC(
+    BRC_PARSE_BRANCHLESS_1E5, parse_branchless, "resources/100k.txt"
+);
+BENCHMARK_1BRC(BRC_PARSE_BRANCHLESS_1E7, parse_branchless, "resources/10m.txt");
+BENCHMARK_1BRC(BRC_PARSE_BRANCHLESS_1E9, parse_branchless, "resources/1b.txt");

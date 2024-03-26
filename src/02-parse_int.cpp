@@ -8,9 +8,9 @@
 
 #include <fmt/format.h>
 
-#include "intparsing.h"
+#include "02-parse_int.h"
 
-namespace rinku::brc::intparsing {
+namespace rinku::brc::parse_int {
 
 static constexpr int BUF_SIZE = 4'194'304;
 
@@ -89,4 +89,4 @@ std::string print(soln_t const& m) {
 
 std::string run(std::string const& datafile) { return print(solve(datafile)); }
 
-} // namespace rinku::brc::intparsing
+} // namespace rinku::brc::parse_int

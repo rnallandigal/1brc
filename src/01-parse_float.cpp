@@ -8,9 +8,9 @@
 
 #include <fmt/format.h>
 
-#include "floatparsing.h"
+#include "01-parse_float.h"
 
-namespace rinku::brc::floatparsing {
+namespace rinku::brc::parse_float {
 
 static constexpr int BUF_SIZE = 8192;
 
@@ -98,4 +98,4 @@ std::string print(soln_t const& m) {
 
 std::string run(std::string const& datafile) { return print(solve(datafile)); }
 
-} // namespace rinku::brc::floatparsing
+} // namespace rinku::brc::parse_float

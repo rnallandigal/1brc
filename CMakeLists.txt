@@ -39,10 +39,11 @@ target_link_libraries(bench fmt pthread benchmark benchmark_main)
 
 # source files
 set(SOURCE_FILES
-	src/baseline.cpp
-	src/floatparsing.cpp
-	src/intparsing.cpp
 	src/diskread.cpp
+	src/00-baseline.cpp
+	src/01-parse_float.cpp
+	src/02-parse_int.cpp
+	src/03-parse_branchless.cpp
 )
 
 # object libs
