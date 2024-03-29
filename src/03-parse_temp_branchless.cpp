@@ -8,9 +8,9 @@
 
 #include <fmt/format.h>
 
-#include "03-parse_branchless.h"
+#include "03-parse_temp_branchless.h"
 
-namespace rinku::brc::parse_branchless {
+namespace rinku::brc::parse_temp_branchless {
 
 static constexpr int BUF_SIZE = 4'194'304;
 
@@ -96,4 +96,4 @@ std::string print(soln_t const& m) {
 
 std::string run(std::string const& datafile) { return print(solve(datafile)); }
 
-} // namespace rinku::brc::parse_branchless
+} // namespace rinku::brc::parse_temp_branchless

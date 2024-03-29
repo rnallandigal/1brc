@@ -10,7 +10,7 @@
 #include "00-baseline.h"
 #include "01-parse_float.h"
 #include "02-parse_int.h"
-#include "03-parse_branchless.h"
+#include "03-parse_temp_branchless.h"
 #include "diskread.h"
 
 char const COMMAND[] =
@@ -28,32 +28,28 @@ Options:
 
 using namespace rinku::brc;
 
-#define PRINT_SOLUTIONS(name, namespace) fmt::print("BRC_name_1E5")
+using sut_t = std::function<std::string(std::string const&)>;
+using testcase_t = std::pair<std::string, sut_t>;
 
-void blah() {}
-
-std::map<
-    std::string,
-    std::pair<std::string, std::function<std::string(std::string const&)>>>
-    problems = {
-        {"BRC_DISKREAD_1E5",         {"resources/100k.txt", diskread::run}      },
-        {"BRC_DISKREAD_1E7",         {"resources/10m.txt", diskread::run}       },
-        {"BRC_DISKREAD_1E9",         {"resources/1b.txt", diskread::run}        },
-        {"BRC_BASELINE_1E5",         {"resources/100k.txt", baseline::run}      },
-        {"BRC_BASELINE_1E7",         {"resources/10m.txt", baseline::run}       },
-        {"BRC_BASELINE_1E9",         {"resources/1b.txt", baseline::run}        },
-        {"BRC_PARSE_FLOAT_1E5",      {"resources/100k.txt", parse_float::run}   },
-        {"BRC_PARSE_FLOAT_1E7",      {"resources/10m.txt", parse_float::run}    },
-        {"BRC_PARSE_FLOAT_1E9",      {"resources/1b.txt", parse_float::run}     },
-        {"BRC_PARSE_INT_1E5",        {"resources/100k.txt", parse_int::run}     },
-        {"BRC_PARSE_INT_1E7",        {"resources/10m.txt", parse_int::run}      },
-        {"BRC_PARSE_INT_1E9",        {"resources/1b.txt", parse_int::run}       },
-        {"BRC_PARSE_BRANCHLESS_1E5",
-         {"resources/100k.txt", parse_branchless::run}                          },
-        {"BRC_PARSE_BRANCHLESS_1E7",
-         {"resources/10m.txt", parse_branchless::run}                           },
-        {"BRC_PARSE_BRANCHLESS_1E9", {"resources/1b.txt", parse_branchless::run}
-        },
+std::map<std::string, testcase_t> problems = {
+    {"DISKREAD_1E5",              {"resources/100k.txt", diskread::run}   },
+    {"DISKREAD_1E7",              {"resources/10m.txt", diskread::run}    },
+    {"DISKREAD_1E9",              {"resources/1b.txt", diskread::run}     },
+    {"BASELINE_1E5",              {"resources/100k.txt", baseline::run}   },
+    {"BASELINE_1E7",              {"resources/10m.txt", baseline::run}    },
+    {"BASELINE_1E9",              {"resources/1b.txt", baseline::run}     },
+    {"PARSE_FLOAT_1E5",           {"resources/100k.txt", parse_float::run}},
+    {"PARSE_FLOAT_1E7",           {"resources/10m.txt", parse_float::run} },
+    {"PARSE_FLOAT_1E9",           {"resources/1b.txt", parse_float::run}  },
+    {"PARSE_INT_1E5",             {"resources/100k.txt", parse_int::run}  },
+    {"PARSE_INT_1E7",             {"resources/10m.txt", parse_int::run}   },
+    {"PARSE_INT_1E9",             {"resources/1b.txt", parse_int::run}    },
+    {"PARSE_TEMP_BRANCHLESS_1E5",
+     {"resources/100k.txt", parse_temp_branchless::run}                   },
+    {"PARSE_TEMP_BRANCHLESS_1E7",
+     {"resources/10m.txt", parse_temp_branchless::run}                    },
+    {"PARSE_TEMP_BRANCHLESS_1E9",
+     {"resources/1b.txt", parse_temp_branchless::run}                     },
 };
 
 int main(int argc, char** argv) {
