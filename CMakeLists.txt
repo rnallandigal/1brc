@@ -44,6 +44,7 @@ set(SOURCE_FILES
 	src/01-parse_float.cpp
 	src/02-parse_int.cpp
 	src/03-parse_temp_branchless.cpp
+	src/04-parse_line_branchless.cpp
 )
 
 # object libs

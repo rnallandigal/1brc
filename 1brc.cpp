@@ -11,6 +11,7 @@
 #include "01-parse_float.h"
 #include "02-parse_int.h"
 #include "03-parse_temp_branchless.h"
+#include "04-parse_line_branchless.h"
 #include "diskread.h"
 
 char const COMMAND[] =
@@ -50,6 +51,12 @@ std::map<std::string, testcase_t> problems = {
      {"resources/10m.txt", parse_temp_branchless::run}                    },
     {"PARSE_TEMP_BRANCHLESS_1E9",
      {"resources/1b.txt", parse_temp_branchless::run}                     },
+    {"PARSE_LINE_BRANCHLESS_1E5",
+     {"resources/100k.txt", parse_line_branchless::run}                   },
+    {"PARSE_LINE_BRANCHLESS_1E7",
+     {"resources/10m.txt", parse_line_branchless::run}                    },
+    {"PARSE_LINE_BRANCHLESS_1E9",
+     {"resources/1b.txt", parse_line_branchless::run}                     },
 };
 
 int main(int argc, char** argv) {

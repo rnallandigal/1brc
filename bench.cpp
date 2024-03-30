@@ -4,6 +4,7 @@
 #include "01-parse_float.h"
 #include "02-parse_int.h"
 #include "03-parse_temp_branchless.h"
+#include "04-parse_line_branchless.h"
 #include "diskread.h"
 
 #define BENCHMARK_1BRC(bench, sut, input) \
@@ -38,4 +39,14 @@ BENCHMARK_1BRC(
 );
 BENCHMARK_1BRC(
     PARSE_TEMP_BRANCHLESS_1E9, parse_temp_branchless, "resources/1b.txt"
+);
+
+BENCHMARK_1BRC(
+    PARSE_LINE_BRANCHLESS_1E5, parse_line_branchless, "resources/100k.txt"
+);
+BENCHMARK_1BRC(
+    PARSE_LINE_BRANCHLESS_1E7, parse_line_branchless, "resources/10m.txt"
+);
+BENCHMARK_1BRC(
+    PARSE_LINE_BRANCHLESS_1E9, parse_line_branchless, "resources/1b.txt"
 );
