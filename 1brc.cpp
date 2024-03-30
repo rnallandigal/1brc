@@ -12,18 +12,20 @@
 #include "02-parse_int.h"
 #include "03-parse_temp_branchless.h"
 #include "04-parse_line_branchless.h"
+#include "05-custom_map.h"
 #include "diskread.h"
 
 char const COMMAND[] =
     R"(1BRC Runner
 
-Usage:  1brc [--check] [FILTER]
+Usage:  1brc [-cq] [FILTER]
         1brc --list
 
 Options:
     FILTER          Select the solutions to run using a regular expression, i.e. "1E5" [default: ""]
     -l, --list      List all available problems
     -c, --check     Check solution against the baseline
+    -q, --quiet     Suppress output
     -h, --help      Show this screen
 )";
 
@@ -57,6 +59,9 @@ std::map<std::string, testcase_t> problems = {
      {"resources/10m.txt", parse_line_branchless::run}                    },
     {"PARSE_LINE_BRANCHLESS_1E9",
      {"resources/1b.txt", parse_line_branchless::run}                     },
+    {"CUSTOM_MAP_1E5",            {"resources/100k.txt", custom_map::run} },
+    {"CUSTOM_MAP_1E7",            {"resources/10m.txt", custom_map::run}  },
+    {"CUSTOM_MAP_1E9",            {"resources/1b.txt", custom_map::run}   },
 };
 
 int main(int argc, char** argv) {
@@ -83,17 +88,22 @@ int main(int argc, char** argv) {
             answers[id] = std::pair(input, impl(input));
         }
 
+        if(!args["--quiet"].asBool()) {
+            for(auto const& [id, desc] : answers) {
+                auto const& [input, ans] = desc;
+                fmt::print("{}:\n{}\n\n", id, ans);
+            }
+        }
+
         if(args["--check"].asBool()) {
             std::unordered_map<std::string, std::string> cache;
             for(auto const& [id, desc] : answers) {
                 auto const& [input, ans] = desc;
                 if(cache.find(input) == cache.end()) {
-                    cache[input] = baseline::run(input);
+                    cache[input] = parse_int::run(input);
                 }
                 fmt::print(
-                    "{}: {};\n{}: {}\n",
-                    id,
-                    ans,
+                    "{}: {}\n",
                     id,
                     cache[input] == ans ? "correct" : "incorrect"
                 );

@@ -13,6 +13,7 @@ namespace rinku::brc::baseline {
 
 static constexpr int BUF_SIZE = 8192;
 
+// TODO: baseline is numerically unstable (incorrect)
 soln_t solve(std::string const& datafile) {
     soln_t m;
     int ret = 1, next = 0;

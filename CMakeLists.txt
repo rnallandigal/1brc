@@ -45,6 +45,7 @@ set(SOURCE_FILES
 	src/02-parse_int.cpp
 	src/03-parse_temp_branchless.cpp
 	src/04-parse_line_branchless.cpp
+	src/05-custom_map.cpp
 )
 
 # object libs
