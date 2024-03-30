@@ -1,0 +1,43 @@
+==63669== Callgrind, a call-graph generating cache profiler
+==63669== Copyright (C) 2002-2017, and GNU GPL'd, by Josef Weidendorfer et al.
+==63669== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==63669== Command: .build/1brc-O3 -q 
+==63669== Parent PID: 63668
+==63669== 
+--63669-- warning: L3 cache found, using its data for the LL simulation.
+--63669-- warning: specified LL cache: line_size 64  assoc 12  total_size 37,748,736
+--63669-- warning: simulated LL cache: line_size 64  assoc 18  total_size 37,748,736
+==63669== For interactive control, run 'callgrind_control -h'.
+==63669== 
+==63669== Process terminating with default action of signal 2 (SIGINT)
+==63669==    at 0x4E2E17F: read (read.c:26)
+==63669==    by 0x4838EF: rinku::brc::baseline::solve(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (00-baseline.cpp:23)
+==63669==    by 0x483C92: rinku::brc::baseline::run(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (00-baseline.cpp:83)
+==63669==    by 0x456B26: std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > std::__invoke_impl<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > (*&)(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&), std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&>(std::__invoke_other, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > (*&)(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&), std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (invoke.h:61)
+==63669==    by 0x453CA7: std::enable_if<is_invocable_r_v<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > (*&)(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&), std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&>, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >::type std::__invoke_r<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > (*&)(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&), std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&>(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > (*&)(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&), std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (invoke.h:116)
+==63669==    by 0x4520B4: std::_Function_handler<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > (std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&), std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > (*)(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)>::_M_invoke(std::_Any_data const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (std_function.h:291)
+==63669==    by 0x44FB9E: std::function<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > (std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)>::operator()(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const (std_function.h:591)
+==63669==    by 0x44B4B6: main (1brc.cpp:88)
+==63669== 
+==63669== Events    : Ir Dr Dw I1mr D1mr D1mw ILmr DLmr DLmw Bc Bcm Bi Bim Ge sysCount sysTime
+==63669== Collected : 1362601021 255504829 136155762 18626 1585244 8998 7498 18302 5588 203042790 6631715 9208551 2732964 81 2296 85
+==63669== 
+==63669== I   refs:      1,362,601,021
+==63669== I1  misses:           18,626
+==63669== LLi misses:            7,498
+==63669== I1  miss rate:          0.00%
+==63669== LLi miss rate:          0.00%
+==63669== 
+==63669== D   refs:        391,660,591  (255,504,829 rd + 136,155,762 wr)
+==63669== D1  misses:        1,594,242  (  1,585,244 rd +       8,998 wr)
+==63669== LLd misses:           23,890  (     18,302 rd +       5,588 wr)
+==63669== D1  miss rate:           0.4% (        0.6%   +         0.0%  )
+==63669== LLd miss rate:           0.0% (        0.0%   +         0.0%  )
+==63669== 
+==63669== LL refs:           1,612,868  (  1,603,870 rd +       8,998 wr)
+==63669== LL misses:            31,388  (     25,800 rd +       5,588 wr)
+==63669== LL miss rate:            0.0% (        0.0%   +         0.0%  )
+==63669== 
+==63669== Branches:        212,251,341  (203,042,790 cond +   9,208,551 ind)
+==63669== Mispredicts:       9,364,679  (  6,631,715 cond +   2,732,964 ind)
+==63669== Mispred rate:            4.4% (        3.3%     +        29.7%   )
