@@ -47,6 +47,7 @@ set(SOURCE_FILES
 	src/04-parse_line_branchless.cpp
 	src/05-custom_map.cpp
 	src/06-mmapio.cpp
+	src/07-threading.cpp
 )
 
 # object libs

@@ -110,8 +110,7 @@ soln_t solve(std::string const& datafile) {
             buf[leftover] = buf[i];
         }
     }
-
-    // fmt::print("{} {} {}\n", m.filled, m.collisions, m.extra_steps);
+    close(fd);
     return m;
 }
 

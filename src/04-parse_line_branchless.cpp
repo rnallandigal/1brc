@@ -82,6 +82,7 @@ soln_t solve(std::string const& datafile) {
             buf[leftover] = buf[i];
         }
     }
+    close(fd);
     return m;
 }
 

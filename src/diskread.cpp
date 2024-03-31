@@ -21,6 +21,7 @@ soln_t solve(std::string const& datafile) {
     while((ret = read(fd, buf, BUF_SIZE)) > 0) {
         total += buf[ret / 2];
     }
+    close(fd);
     return total;
 }
 

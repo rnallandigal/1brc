@@ -4,15 +4,17 @@
 
 #include <algorithm>
 #include <cstdio>
+#include <map>
 #include <string>
+#include <thread>
 #include <vector>
 
 #include <fmt/format.h>
 #include <sys/mman.h>
 
-#include "06-mmapio.h"
+#include "07-threading.h"
 
-namespace rinku::brc::mmapio {
+namespace rinku::brc::threading {
 
 void map_t::add(char const* name, int64_t len, uint64_t hash, int64_t temp) {
     for(int64_t start = hash % n, slot = start; true; slot = (slot + 1) % n) {
@@ -66,17 +68,10 @@ int64_t mix(uint64_t hash, uint64_t value) {
     return hash ^ value;
 }
 
-soln_t solve(std::string const& datafile) {
-    int fd = open(datafile.c_str(), O_RDONLY);
-    int64_t file_length = lseek(fd, 0, SEEK_END);
-    char* buf = (char*)mmap(nullptr, file_length, PROT_READ, MAP_SHARED, fd, 0);
-    close(fd);
-    madvise(buf, file_length, MADV_SEQUENTIAL);
-
-    soln_t m(10000);
+void work(soln_t& m, char* buf, char* end) {
     int offset = 0;
     uint64_t hash = 0;
-    for(char* line = buf; line + offset < &buf[file_length];) {
+    for(char* line = buf; line + offset < end;) {
         int64_t next8 = *(int64_t*)&line[offset];
         int64_t semicolon_one_hot = find_semicolon(next8);
 
@@ -100,37 +95,85 @@ soln_t solve(std::string const& datafile) {
             hash = 0;
         }
     }
-    munmap(buf, file_length);
-    return m;
 }
 
-std::string print(soln_t const& m) {
+template <int N>
+std::vector<soln_t> solve(std::string const& datafile) {
+    int fd = open(datafile.c_str(), O_RDONLY);
+    int64_t file_length = lseek(fd, 0, SEEK_END);
+    char* buf = (char*)mmap(nullptr, file_length, PROT_READ, MAP_SHARED, fd, 0);
+    close(fd);
+    madvise(buf, file_length, MADV_SEQUENTIAL);
 
-    std::vector<elem_t> v;
-    for(auto const& elem : m.slots) {
-        if(!elem.key.empty()) v.push_back(elem);
+    std::vector<soln_t> solns(N, soln_t(10000));
+    std::vector<std::thread> threads;
+
+    int64_t start = 0;
+    for(int i = 0; i < N; i++) {
+        int64_t end = std::min(file_length, start + file_length / N);
+        while(buf[end - 1] != '\n')
+            end++;
+        threads.emplace_back(work, std::ref(solns[i]), &buf[start], &buf[end]);
+        start = end;
     }
 
-    std::sort(v.begin(), v.end(), [](auto const& a, auto const& b) {
-        return a.key < b.key;
-    });
+    for(int i = 0; i < N; i++)
+        threads[i].join();
+
+    munmap(buf, file_length);
+    return solns;
+}
+
+std::string print(std::vector<soln_t> const& solns) {
+    std::map<std::string, elem_t> m;
+
+    for(auto const& soln : solns) {
+        for(auto const& elem : soln.slots) {
+            if(elem.key.empty()) continue;
+
+            elem_t& acc = m[elem.key];
+            acc.min = std::min(acc.min, elem.min);
+            acc.sum += elem.sum;
+            acc.max = std::max(acc.max, elem.max);
+            acc.count += elem.count;
+        }
+    }
 
     std::string s = "{";
-    for(auto const& elem : v) {
-        s += elem.key;
+    for(auto const& [key, val] : m) {
+        s += key;
         s += '=';
-        s += fmt::format("{:.1f}", (double)elem.min / 10);
+        s += fmt::format("{:.1f}", (double)val.min / 10);
         s += '/';
-        s += fmt::format("{:.1f}", (double)elem.sum / (10 * elem.count));
+        s += fmt::format("{:.1f}", (double)val.sum / (10 * val.count));
         s += '/';
-        s += fmt::format("{:.1f}", (double)elem.max / 10);
+        s += fmt::format("{:.1f}", (double)val.max / 10);
         s += ", ";
     }
     s.pop_back();
-    s[s.size() - 1] = '}';
+    if(!s.empty()) s[s.size() - 1] = '}';
+
     return s;
 }
 
-std::string run(std::string const& datafile) { return print(solve(datafile)); }
+template <int N>
+std::string run(std::string const& datafile) {
+    return print(solve<N>(datafile));
+}
 
-} // namespace rinku::brc::mmapio
+template std::vector<soln_t> solve<2>(std::string const&);
+template std::string run<2>(std::string const&);
+template std::vector<soln_t> solve<4>(std::string const&);
+template std::string run<4>(std::string const&);
+template std::vector<soln_t> solve<8>(std::string const&);
+template std::string run<8>(std::string const&);
+template std::vector<soln_t> solve<12>(std::string const&);
+template std::string run<12>(std::string const&);
+template std::vector<soln_t> solve<16>(std::string const&);
+template std::string run<16>(std::string const&);
+template std::vector<soln_t> solve<24>(std::string const&);
+template std::string run<24>(std::string const&);
+template std::vector<soln_t> solve<32>(std::string const&);
+template std::string run<32>(std::string const&);
+
+} // namespace rinku::brc::threading

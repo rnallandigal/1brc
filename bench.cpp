@@ -7,56 +7,58 @@
 #include "04-parse_line_branchless.h"
 #include "05-custom_map.h"
 #include "06-mmapio.h"
+#include "07-threading.h"
 #include "diskread.h"
 
-#define BENCHMARK_1BRC(bench, sut, input) \
-    void bench(benchmark::State& state) { \
-        using namespace rinku::brc::sut;  \
-        for(auto _ : state)               \
-            print(solve(input));          \
-    }                                     \
-    BENCHMARK(bench)->Unit(benchmark::kMillisecond)
+#define BRC_IMPL(bench, sut, input, solve, print) \
+    void bench(benchmark::State& state) {         \
+        using namespace rinku::brc::sut;          \
+        for(auto _ : state)                       \
+            print(solve(input));                  \
+    }                                             \
+    BENCHMARK(bench)                              \
+        ->Unit(benchmark::kMillisecond)           \
+        ->MeasureProcessCPUTime()                 \
+        ->UseRealTime();
 
-BENCHMARK_1BRC(DISKREAD_1E5, diskread, "resources/100k.txt");
-BENCHMARK_1BRC(DISKREAD_1E7, diskread, "resources/10m.txt");
-BENCHMARK_1BRC(DISKREAD_1E9, diskread, "resources/1b.txt");
+#define BRC(bench, sut, input) BRC_IMPL(bench, sut, input, solve, print)
+#define BRC_PURE(bench, sut, input) BRC_IMPL(bench##_PURE, sut, input, solve, )
 
-BENCHMARK_1BRC(BASELINE_1E5, baseline, "resources/100k.txt");
-BENCHMARK_1BRC(BASELINE_1E7, baseline, "resources/10m.txt");
-BENCHMARK_1BRC(BASELINE_1E9, baseline, "resources/1b.txt");
+#define BRC_THREADED(bench, sut, input, N) \
+    BRC_IMPL(bench, sut, input, solve<N>, print)
 
-BENCHMARK_1BRC(PARSE_FLOAT_1E5, parse_float, "resources/100k.txt");
-BENCHMARK_1BRC(PARSE_FLOAT_1E7, parse_float, "resources/10m.txt");
-BENCHMARK_1BRC(PARSE_FLOAT_1E9, parse_float, "resources/1b.txt");
+#define BRC_THREADED_PURE(bench, sut, input, N) \
+    BRC_IMPL(bench##_PURE, sut, input, solve<N>, )
 
-BENCHMARK_1BRC(PARSE_INT_1E5, parse_int, "resources/100k.txt");
-BENCHMARK_1BRC(PARSE_INT_1E7, parse_int, "resources/10m.txt");
-BENCHMARK_1BRC(PARSE_INT_1E9, parse_int, "resources/1b.txt");
+#define BRC_ALL(bench, sut)                           \
+    BRC(bench##_1E5, sut, "resources/100k.txt");      \
+    BRC(bench##_1E7, sut, "resources/10m.txt");       \
+    BRC(bench##_1E9, sut, "resources/1b.txt");        \
+    BRC_PURE(bench##_1E5, sut, "resources/100k.txt"); \
+    BRC_PURE(bench##_1E7, sut, "resources/10m.txt");  \
+    BRC_PURE(bench##_1E9, sut, "resources/1b.txt")
 
-BENCHMARK_1BRC(
-    PARSE_TEMP_BRANCHLESS_1E5, parse_temp_branchless, "resources/100k.txt"
-);
-BENCHMARK_1BRC(
-    PARSE_TEMP_BRANCHLESS_1E7, parse_temp_branchless, "resources/10m.txt"
-);
-BENCHMARK_1BRC(
-    PARSE_TEMP_BRANCHLESS_1E9, parse_temp_branchless, "resources/1b.txt"
-);
+#define BRC_THREADED_ALL(bench, sut, N)                                \
+    BRC_THREADED(bench##_1E5_x##N, sut, "resources/100k.txt", N);      \
+    BRC_THREADED(bench##_1E7_x##N, sut, "resources/10m.txt", N);       \
+    BRC_THREADED(bench##_1E9_x##N, sut, "resources/1b.txt", N);        \
+    BRC_THREADED_PURE(bench##_1E5_x##N, sut, "resources/100k.txt", N); \
+    BRC_THREADED_PURE(bench##_1E7_x##N, sut, "resources/10m.txt", N);  \
+    BRC_THREADED_PURE(bench##_1E9_x##N, sut, "resources/1b.txt", N)
 
-BENCHMARK_1BRC(
-    PARSE_LINE_BRANCHLESS_1E5, parse_line_branchless, "resources/100k.txt"
-);
-BENCHMARK_1BRC(
-    PARSE_LINE_BRANCHLESS_1E7, parse_line_branchless, "resources/10m.txt"
-);
-BENCHMARK_1BRC(
-    PARSE_LINE_BRANCHLESS_1E9, parse_line_branchless, "resources/1b.txt"
-);
+BRC_ALL(DISKREAD, diskread);
+BRC_ALL(BASELINE, baseline);
+BRC_ALL(PARSE_FLOAT, parse_float);
+BRC_ALL(PARSE_INT, parse_int);
+BRC_ALL(PARSE_TEMP_BRANCHLESS, parse_temp_branchless);
+BRC_ALL(PARSE_LINE_BRANCHLESS, parse_line_branchless);
+BRC_ALL(CUSTOM_MAP, custom_map);
+BRC_ALL(MMAPIO, mmapio);
 
-BENCHMARK_1BRC(CUSTOM_MAP_1E5, custom_map, "resources/100k.txt");
-BENCHMARK_1BRC(CUSTOM_MAP_1E7, custom_map, "resources/10m.txt");
-BENCHMARK_1BRC(CUSTOM_MAP_1E9, custom_map, "resources/1b.txt");
-
-BENCHMARK_1BRC(MMAPIO_1E5, mmapio, "resources/100k.txt");
-BENCHMARK_1BRC(MMAPIO_1E7, mmapio, "resources/10m.txt");
-BENCHMARK_1BRC(MMAPIO_1E9, mmapio, "resources/1b.txt");
+BRC_THREADED_ALL(THREADING, threading, 2);
+BRC_THREADED_ALL(THREADING, threading, 4);
+BRC_THREADED_ALL(THREADING, threading, 8);
+BRC_THREADED_ALL(THREADING, threading, 12);
+BRC_THREADED_ALL(THREADING, threading, 16);
+BRC_THREADED_ALL(THREADING, threading, 24);
+BRC_THREADED_ALL(THREADING, threading, 32);
