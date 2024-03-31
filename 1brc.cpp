@@ -13,6 +13,7 @@
 #include "03-parse_temp_branchless.h"
 #include "04-parse_line_branchless.h"
 #include "05-custom_map.h"
+#include "06-mmapio.h"
 #include "diskread.h"
 
 char const COMMAND[] =
@@ -62,6 +63,9 @@ std::map<std::string, testcase_t> problems = {
     {"CUSTOM_MAP_1E5",            {"resources/100k.txt", custom_map::run} },
     {"CUSTOM_MAP_1E7",            {"resources/10m.txt", custom_map::run}  },
     {"CUSTOM_MAP_1E9",            {"resources/1b.txt", custom_map::run}   },
+    {"MMAPIO_1E5",                {"resources/100k.txt", mmapio::run}     },
+    {"MMAPIO_1E7",                {"resources/10m.txt", mmapio::run}      },
+    {"MMAPIO_1E9",                {"resources/1b.txt", mmapio::run}       },
 };
 
 int main(int argc, char** argv) {

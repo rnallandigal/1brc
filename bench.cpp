@@ -6,6 +6,7 @@
 #include "03-parse_temp_branchless.h"
 #include "04-parse_line_branchless.h"
 #include "05-custom_map.h"
+#include "06-mmapio.h"
 #include "diskread.h"
 
 #define BENCHMARK_1BRC(bench, sut, input) \
@@ -55,3 +56,7 @@ BENCHMARK_1BRC(
 BENCHMARK_1BRC(CUSTOM_MAP_1E5, custom_map, "resources/100k.txt");
 BENCHMARK_1BRC(CUSTOM_MAP_1E7, custom_map, "resources/10m.txt");
 BENCHMARK_1BRC(CUSTOM_MAP_1E9, custom_map, "resources/1b.txt");
+
+BENCHMARK_1BRC(MMAPIO_1E5, mmapio, "resources/100k.txt");
+BENCHMARK_1BRC(MMAPIO_1E7, mmapio, "resources/10m.txt");
+BENCHMARK_1BRC(MMAPIO_1E9, mmapio, "resources/1b.txt");

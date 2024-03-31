@@ -6,7 +6,7 @@
 
 #include <fmt/format.h>
 
-namespace rinku::brc::custom_map {
+namespace rinku::brc::mmapio {
 
 struct elem_t {
     std::string key;
@@ -32,4 +32,4 @@ soln_t solve(std::string const& datafile);
 std::string print(soln_t const& soln);
 std::string run(std::string const& datafile);
 
-} // namespace rinku::brc::custom_map
+} // namespace rinku::brc::mmapio

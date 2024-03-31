@@ -11,7 +11,7 @@ for sut in $SUTS; do
         --cache-sim=yes \
         --collect-jumps=yes \
         --collect-bus=yes \
-        --collect-systime=yes \
+        --collect-systime=usec \
         --branch-sim=yes \
         --callgrind-out-file="$PROFILE_DIR/$sut.callgrind.out" \
         --log-file="$PROFILE_DIR/$sut.log" \
