@@ -29,7 +29,7 @@ Benchmark 1: ./calculate_average_baseline.sh
 
 ```
 $ .build/bench --benchmark_filter="1E9(_x[0-9]+/|/)"
-2024-04-01T05:49:52-04:00
+2024-04-01T06:12:54-04:00
 Running .build/bench
 Run on (32 X 5400 MHz CPU s)
 CPU Caches:
@@ -40,19 +40,19 @@ CPU Caches:
 --------------------------------------------------------------------
 Benchmark                          Time             CPU   Iterations
 --------------------------------------------------------------------
-DISKREAD_1E9                    3513 ms         1878 ms            1
-BASELINE_1E9                   60559 ms        60493 ms            1
-PARSE_FLOAT_1E9                27162 ms        27133 ms            1
-PARSE_INT_1E9                  26602 ms        26571 ms            1
-PARSE_TEMP_BRANCHLESS_1E9      25846 ms        25816 ms            1
-PARSE_LINE_BRANCHLESS_1E9      22608 ms        22582 ms            1
-CUSTOM_MAP_1E9                 15066 ms        15047 ms            1
-MMAPIO_1E9                     14471 ms        14453 ms            1
-THREADING_1E9_x2               11428 ms        20260 ms            1
-THREADING_1E9_x4               10156 ms        32120 ms            1
-THREADING_1E9_x8                5375 ms        32352 ms            1
-THREADING_1E9_x12               4171 ms        38560 ms            1
-THREADING_1E9_x16               3304 ms        43116 ms            1
-THREADING_1E9_x24               2762 ms        49247 ms            1
-THREADING_1E9_x32               2389 ms        58107 ms            1
+DISKREAD_1E9                     918 ms          916 ms            1
+BASELINE_1E9                   60980 ms        60915 ms            1
+PARSE_FLOAT_1E9                28582 ms        28550 ms            1
+PARSE_INT_1E9                  27802 ms        27768 ms            1
+PARSE_TEMP_BRANCHLESS_1E9      26592 ms        26560 ms            1
+PARSE_LINE_BRANCHLESS_1E9      23659 ms        23631 ms            1
+CUSTOM_MAP_1E9                 14434 ms        14415 ms            1
+MMAPIO_1E9                     14013 ms        13996 ms            1
+THREADING_1E9_x2                7119 ms        14080 ms            1
+THREADING_1E9_x4                3935 ms        14939 ms            1
+THREADING_1E9_x8                1993 ms        14774 ms            1
+THREADING_1E9_x12               1771 ms        16810 ms            1
+THREADING_1E9_x16               1411 ms        18129 ms            1
+THREADING_1E9_x24               1094 ms        20620 ms            1
+THREADING_1E9_x32                996 ms        23155 ms            1
 ```

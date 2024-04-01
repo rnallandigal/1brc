@@ -19,7 +19,7 @@ struct elem_t {
 
 struct map_t {
     std::vector<elem_t> slots;
-    int64_t n, filled = 0, collisions = 0, extra_steps = 0;
+    int64_t n;
 
     map_t(int64_t size) : slots(size), n(size) {}
 

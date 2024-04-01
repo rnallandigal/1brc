@@ -17,19 +17,15 @@
 namespace rinku::brc::threading {
 
 void map_t::add(char const* name, int64_t len, uint64_t hash, int64_t temp) {
-    for(int64_t start = hash % n, slot = start; true; slot = (slot + 1) % n) {
+    for(int64_t slot = hash % n; true; slot = (slot + 1) % n) {
         if(slots[slot].key.empty()) {
             slots[slot] = elem_t(name, len, temp);
-            filled++;
             break;
         } else if(strncmp(name, slots[slot].key.data(), len) == 0) {
             slots[slot].min = std::min(slots[slot].min, temp);
             slots[slot].sum += temp;
             slots[slot].max = std::max(slots[slot].max, temp);
             slots[slot].count++;
-
-            collisions += start != slot;
-            extra_steps += (slot - start + n) % n;
             break;
         }
     }
