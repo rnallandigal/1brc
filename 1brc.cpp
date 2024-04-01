@@ -15,6 +15,7 @@
 #include "05-custom_map.h"
 #include "06-mmapio.h"
 #include "07-threading.h"
+#include "08-chunking.h"
 #include "diskread.h"
 
 char const COMMAND[] =
@@ -88,6 +89,27 @@ std::map<std::string, testcase_t> problems = {
     {"THREADING_1E5_x32",         {"resources/100k.txt", threading::run<32>}},
     {"THREADING_1E7_x32",         {"resources/10m.txt", threading::run<32>} },
     {"THREADING_1E9_x32",         {"resources/1b.txt", threading::run<32>}  },
+    {"CHUNKING_1E5_x2",           {"resources/100k.txt", chunking::run<2>}  },
+    {"CHUNKING_1E7_x2",           {"resources/10m.txt", chunking::run<2>}   },
+    {"CHUNKING_1E9_x2",           {"resources/1b.txt", chunking::run<2>}    },
+    {"CHUNKING_1E5_x4",           {"resources/100k.txt", chunking::run<4>}  },
+    {"CHUNKING_1E7_x4",           {"resources/10m.txt", chunking::run<4>}   },
+    {"CHUNKING_1E9_x4",           {"resources/1b.txt", chunking::run<4>}    },
+    {"CHUNKING_1E5_x8",           {"resources/100k.txt", chunking::run<8>}  },
+    {"CHUNKING_1E7_x8",           {"resources/10m.txt", chunking::run<8>}   },
+    {"CHUNKING_1E9_x8",           {"resources/1b.txt", chunking::run<8>}    },
+    {"CHUNKING_1E5_x12",          {"resources/100k.txt", chunking::run<12>} },
+    {"CHUNKING_1E7_x12",          {"resources/10m.txt", chunking::run<12>}  },
+    {"CHUNKING_1E9_x12",          {"resources/1b.txt", chunking::run<12>}   },
+    {"CHUNKING_1E5_x16",          {"resources/100k.txt", chunking::run<16>} },
+    {"CHUNKING_1E7_x16",          {"resources/10m.txt", chunking::run<16>}  },
+    {"CHUNKING_1E9_x16",          {"resources/1b.txt", chunking::run<16>}   },
+    {"CHUNKING_1E5_x24",          {"resources/100k.txt", chunking::run<24>} },
+    {"CHUNKING_1E7_x24",          {"resources/10m.txt", chunking::run<24>}  },
+    {"CHUNKING_1E9_x24",          {"resources/1b.txt", chunking::run<24>}   },
+    {"CHUNKING_1E5_x32",          {"resources/100k.txt", chunking::run<32>} },
+    {"CHUNKING_1E7_x32",          {"resources/10m.txt", chunking::run<32>}  },
+    {"CHUNKING_1E9_x32",          {"resources/1b.txt", chunking::run<32>}   },
 };
 
 int main(int argc, char** argv) {

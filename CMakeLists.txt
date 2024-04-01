@@ -48,6 +48,7 @@ set(SOURCE_FILES
 	src/05-custom_map.cpp
 	src/06-mmapio.cpp
 	src/07-threading.cpp
+	src/08-chunking.cpp
 )
 
 # object libs

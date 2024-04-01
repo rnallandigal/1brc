@@ -8,6 +8,7 @@
 #include "05-custom_map.h"
 #include "06-mmapio.h"
 #include "07-threading.h"
+#include "08-chunking.h"
 #include "diskread.h"
 
 #define BRC_IMPL(bench, sut, input, solve, print) \
@@ -62,3 +63,11 @@ BRC_THREADED_ALL(THREADING, threading, 12);
 BRC_THREADED_ALL(THREADING, threading, 16);
 BRC_THREADED_ALL(THREADING, threading, 24);
 BRC_THREADED_ALL(THREADING, threading, 32);
+
+BRC_THREADED_ALL(CHUNKING, chunking, 2);
+BRC_THREADED_ALL(CHUNKING, chunking, 4);
+BRC_THREADED_ALL(CHUNKING, chunking, 8);
+BRC_THREADED_ALL(CHUNKING, chunking, 12);
+BRC_THREADED_ALL(CHUNKING, chunking, 16);
+BRC_THREADED_ALL(CHUNKING, chunking, 24);
+BRC_THREADED_ALL(CHUNKING, chunking, 32);
