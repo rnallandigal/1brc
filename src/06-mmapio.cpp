@@ -30,7 +30,6 @@ void map_t::add(char const* name, int64_t len, uint64_t hash, int64_t temp) {
 }
 
 static constexpr int64_t DOT_DIFFERENTIATOR = 0x1010101010101000;
-static constexpr uint64_t GOLDEN_RATIO = 0x9e3779b97f4a7c15ULL;
 
 // Credit: https://richardstartin.github.io/posts/finding-bytes
 int64_t find_semicolon(int64_t bytes) {
@@ -56,12 +55,6 @@ int64_t parse_temperature(int64_t temp, int dot_idx) {
     return (ans ^ sign) - sign;
 }
 
-int64_t mix(uint64_t hash, uint64_t value) {
-    value = value * GOLDEN_RATIO;
-    value ^= (value >> 33);
-    return hash ^ value;
-}
-
 soln_t solve(std::string const& datafile) {
     int fd = open(datafile.c_str(), O_RDONLY);
     int64_t file_length = lseek(fd, 0, SEEK_END);
@@ -70,28 +63,25 @@ soln_t solve(std::string const& datafile) {
     madvise(buf, file_length, MADV_SEQUENTIAL);
 
     soln_t m(10000);
-    int offset = 0;
-    uint64_t hash = 0;
+    uint64_t offset = 0, hash = 0;
     for(char* line = buf; line + offset < &buf[file_length];) {
         int64_t next8 = *(int64_t*)&line[offset];
         int64_t semicolon_one_hot = find_semicolon(next8);
 
         if(!semicolon_one_hot) {
             offset += 8;
-            hash = mix(hash, next8);
+            hash += next8;
         } else {
-            int64_t semicolon_idx = __builtin_ctzll(semicolon_one_hot) / 8;
-            int64_t temp = *(int64_t*)(&line[offset + semicolon_idx + 1]);
+            int64_t semicolon_bit_idx = __builtin_ctzll(semicolon_one_hot);
+            offset += semicolon_bit_idx / 8 + 1;
+            int64_t temp = *(int64_t*)(&line[offset]);
             int64_t dot_idx = __builtin_ctzll(~temp & DOT_DIFFERENTIATOR);
-
-            int64_t rem = next8 & ~(~0lu << (semicolon_idx * 8));
-            hash = mix(hash, rem);
-
             int64_t value = parse_temperature(temp, dot_idx);
 
-            m.add(line, offset + semicolon_idx, hash, value);
+            hash += next8 & ~(~0lu << semicolon_bit_idx);
+            m.add(line, offset - 1, hash, value);
 
-            line += offset + semicolon_idx + 1 + dot_idx / 8 + 3;
+            line += offset + dot_idx / 8 + 3;
             offset = 0;
             hash = 0;
         }
