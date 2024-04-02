@@ -51,6 +51,7 @@ soln_t solve(std::string const& datafile) {
             }
         }
     }
+    close(fd);
     return m;
 }
 
