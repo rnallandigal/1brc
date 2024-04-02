@@ -12,9 +12,9 @@ Solution to the [1BRC](https://github.com/gunnarmorling/1brc) challenge in C++.
 
 `(mkdir .build && cd .build && cmake .. && make)`
 
-# Benchmarks:
+# Benchmarks
 
-Benchmarks are run on an Intel 13980HX mobile processor, with 32GB DDR5 dual channel RAM at 5600MHz.
+Benchmarks are run on an Intel 13980HX (8P + 16E core) mobile processor, with 32GB DDR5 dual channel RAM at 5600MHz.
 
 ## Baseline (Java)
 
