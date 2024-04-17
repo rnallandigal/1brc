@@ -9,6 +9,7 @@
 #include "06-mmapio.h"
 #include "07-threading.h"
 #include "08-chunking.h"
+#include "09-perfect_hash.h"
 #include "diskread.h"
 
 #define BRC_IMPL(bench, sut, input, solve, print) \
@@ -71,3 +72,11 @@ BRC_THREADED_ALL(CHUNKING, chunking, 12);
 BRC_THREADED_ALL(CHUNKING, chunking, 16);
 BRC_THREADED_ALL(CHUNKING, chunking, 24);
 BRC_THREADED_ALL(CHUNKING, chunking, 32);
+
+BRC_THREADED_ALL(PERFECT_HASH, perfect_hash, 2);
+BRC_THREADED_ALL(PERFECT_HASH, perfect_hash, 4);
+BRC_THREADED_ALL(PERFECT_HASH, perfect_hash, 8);
+BRC_THREADED_ALL(PERFECT_HASH, perfect_hash, 12);
+BRC_THREADED_ALL(PERFECT_HASH, perfect_hash, 16);
+BRC_THREADED_ALL(PERFECT_HASH, perfect_hash, 24);
+BRC_THREADED_ALL(PERFECT_HASH, perfect_hash, 32);

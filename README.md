@@ -29,7 +29,6 @@ Benchmark 1: ./calculate_average_baseline.sh
 
 ```
 $ .build/bench --benchmark_filter="1E9(_x[0-9]+/|/)"
-2024-04-01T08:49:15-04:00
 Running .build/bench
 Run on (32 X 5400 MHz CPU s)
 CPU Caches:
@@ -63,4 +62,11 @@ CHUNKING_1E9_x12                1464 ms        16540 ms            1
 CHUNKING_1E9_x16                1224 ms        18128 ms            1
 CHUNKING_1E9_x24                 954 ms        20723 ms            1
 CHUNKING_1E9_x32                 838 ms        23783 ms            1
+PERFECT_HASH_1E9_x2             4841 ms         9590 ms            1
+PERFECT_HASH_1E9_x4             2612 ms        10200 ms            1
+PERFECT_HASH_1E9_x8             1344 ms        10160 ms            1
+PERFECT_HASH_1E9_x12            1001 ms        11075 ms            1
+PERFECT_HASH_1E9_x16             822 ms        11885 ms            1
+PERFECT_HASH_1E9_x24             623 ms        12995 ms            1
+PERFECT_HASH_1E9_x32             512 ms        13659 ms            1
 ```

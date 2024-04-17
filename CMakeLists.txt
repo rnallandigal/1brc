@@ -49,6 +49,7 @@ set(SOURCE_FILES
 	src/06-mmapio.cpp
 	src/07-threading.cpp
 	src/08-chunking.cpp
+	src/09-perfect_hash.cpp
 )
 
 # object libs
